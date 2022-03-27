@@ -1,0 +1,39 @@
+##EDA for pie bakery visualisation
+
+##checking structure of dataset 
+str(Pie_bakery)
+
+#Making clean names using the janitor library
+library(janitor)
+Pie_bakery = clean_names(Pie_bakery)
+colnames(Pie_bakery)
+
+#changing structure of variables
+Pie_bakery$order_date = as.Date(Pie_bakery$order_date)
+Pie_bakery$month_yr = as.Date(Pie_bakery$month_yr)
+Pie_bakery$day_of_week = as.factor(Pie_bakery$day_of_week)
+Pie_bakery$pie_flavor = as.factor(Pie_bakery$pie_flavor)
+Pie_bakery$slice_or_whole_pie = as.factor(Pie_bakery$slice_or_whole_pie)
+Pie_bakery$pre_order_in_store_purchase = as.factor(Pie_bakery$pre_order_in_store_purchase)
+Pie_bakery$organic = as.factor(Pie_bakery$organic)
+
+#descriptive summary of pie bakery 
+summary(Pie_bakery)
+
+#Data visualisation using ggplot2
+library(ggplot2)
+?ggplot2
+ggplot(Pie_bakery, aes(cost)) + geom_histogram()
+ggplot(Pie_bakery, aes(cost)) + geom_boxplot()
+
+
+ggplot(Pie_bakery, aes(quantity)) + geom_histogram()
+ggplot(Pie_bakery, aes(quantity)) + geom_boxplot()
+
+#Finding relationships amongst variables 
+library(corrplot)
+Pie = c(4,5,6,7,8,9,10)
+corrplot(Pie_bakery$order_date,Pie_bakery$quantity)
+library(DataExplorer)
+plot_correlation(Pie_bakery, maxcat =6)
+cor(Pie_bakery, method = 'spearman')
